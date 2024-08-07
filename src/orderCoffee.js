@@ -2,7 +2,6 @@ import inquirer from "inquirer";
 import { createClient } from "@supabase/supabase-js";
 import Stripe from "stripe";
 import qrcode from "qrcode-terminal";
-import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -14,6 +13,7 @@ const supabase = createClient(supabaseUrl, supabaseAnonKey);
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
 const stripe = new Stripe(stripeSecretKey);
 
+// Menu configuration - you can also add a supabase querie to get the menu
 const coffeeMenu = [
   { name: "Espresso", price: 2.5 },
   { name: "Latte", price: 3.5 },
@@ -40,31 +40,25 @@ const milkOptions = [
 const whippedCreamOptions = ["No whipped cream", "Add whipped cream"];
 
 async function createAccount() {
-  const { email, name, password } = await inquirer.prompt([
+  const { email, password } = await inquirer.prompt([
     { type: "input", name: "email", message: "Enter your email:" },
-    { type: "input", name: "name", message: "Enter your name:" },
     { type: "password", name: "password", message: "Create a password:" },
   ]);
 
-  const hashedPassword = await bcrypt.hash(password, 10);
-
-  const { data, error } = await supabase
-    .from("usuarios")
-    .insert([{ email, nombre: name, password: hashedPassword }])
-    .select();
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+  });
 
   if (error) {
     console.error("Error creating account:", error.message);
     return null;
   }
 
-  if (data && data.length > 0) {
-    console.log("Account created successfully!");
-    return data[0];
-  } else {
-    console.error("Unexpected error: No data returned from Supabase.");
-    return null;
-  }
+  console.log(
+    "Account created successfully! Please check your email to verify your account."
+  );
+  return data.user;
 }
 
 async function login() {
@@ -73,25 +67,18 @@ async function login() {
     { type: "password", name: "password", message: "Enter your password:" },
   ]);
 
-  const { data, error } = await supabase
-    .from("usuarios")
-    .select("*")
-    .eq("email", email)
-    .single();
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
 
-  if (error || !data) {
-    console.error("Error logging in: User not found");
-    return null;
-  }
-
-  const isPasswordValid = await bcrypt.compare(password, data.password);
-  if (!isPasswordValid) {
-    console.error("Error logging in: Incorrect password");
+  if (error) {
+    console.error("Error logging in:", error.message);
     return null;
   }
 
   console.log("Logged in successfully!");
-  return data;
+  return data.user;
 }
 
 async function createPaymentLink(amount) {
@@ -188,7 +175,6 @@ async function orderCoffee(user) {
     );
     qrcode.generate(paymentLink, { small: true });
 
-    // Guardar el pedido en la base de datos
     const { error } = await supabase.from("pedidos").insert([
       {
         usuario_id: user.id,
