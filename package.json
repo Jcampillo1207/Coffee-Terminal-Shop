@@ -1,0 +1,34 @@
+{
+  "name": "coffeeshell",
+  "version": "1.0.0",
+  "description": "A CLI app for ordering coffee from the terminal",
+  "main": "orderCoffee.js",
+  "type": "module",
+  "bin": {
+    "coffeeshell": "./bin/coffeeshell.js"
+  },
+  "scripts": {
+    "start": "node ./bin/coffeeshell.js",
+    "prepublishOnly": "npm run build",
+    "build": "echo 'Building project...'",
+    "version": "echo 'Updating version...'",
+    "postversion": "git push && git push --tags && npm publish"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.0.0",
+    "bcrypt": "^5.0.1",
+    "dotenv": "^16.3.1",
+    "inquirer": "^9.1.5",
+    "qrcode-terminal": "^0.12.0",
+    "stripe": "^10.9.0"
+  },
+  "keywords": [
+    "coffee",
+    "cli",
+    "ordering",
+    "terminal",
+    "nodejs"
+  ],
+  "author": "José Campillo",
+  "license": "MIT"
+}
