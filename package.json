@@ -1,7 +1,7 @@
 {
   "name": "coffeeshell",
   "version": "2.0.0",
-  "description": "A CLI app for ordering coffee from the terminal",
+  "description": "A CLI app for ordering coffee from the terminal, using Node.js, Supabase and Stripe.",
   "main": "orderCoffee.js",
   "type": "module",
   "bin": {
