@@ -1,6 +1,6 @@
 {
   "name": "coffeeshell",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "A CLI app for ordering coffee from the terminal, using Node.js, Supabase and Stripe.",
   "main": "orderCoffee.js",
   "type": "module",
@@ -11,7 +11,7 @@
     "start": "node ./bin/coffeeshell.js",
     "prepublishOnly": "npm run build",
     "build": "echo 'Building project...'",
-    "version": " npm version patch && echo 'Updating version...'",
+    "version": "echo 'Updating version...'",
     "postversion": "git add . && git commit -m 'Update version' && git push && git push --tags && npm publish"
   },
   "dependencies": {
