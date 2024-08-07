@@ -11,7 +11,7 @@
     "start": "node ./bin/coffeeshell.js",
     "prepublishOnly": "npm run build",
     "build": "echo 'Building project...'",
-    "version": "echo 'Updating version...'",
+    "version": " npm version patch && echo 'Updating version...'",
     "postversion": "git add . && git commit -m 'Update version' && git push && git push --tags && npm publish"
   },
   "dependencies": {

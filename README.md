@@ -88,8 +88,6 @@ Add New Features: Modify orderCoffee.js to implement additional features such as
 Integrate Other APIs: Extend functionality by integrating other APIs or services (e.g., notifications or delivery tracking).
 Contributing
 
----
-
 If you want to contribute to this project, please follow these steps:
 
 Fork the repository.
