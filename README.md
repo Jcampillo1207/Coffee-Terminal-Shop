@@ -29,19 +29,14 @@ Before you begin, ensure you have met the following requirements:
    Install dependencies:
    ```
 
-bash
-Mostrar siempre los detalles
-
-Copiar código
+```bash
 npm install
+```
 Set up environment variables:
 
 Create a .env file in the root directory and populate it with your Supabase and Stripe credentials.
 
-plaintext
-Mostrar siempre los detalles
 
-Copiar código
 SUPABASE_URL=https://your_supabase_url.supabase.co
 SUPABASE_ANON_KEY=your_supabase_anon_key
 STRIPE_SECRET_KEY=your_stripe_secret_key
@@ -49,21 +44,20 @@ Build the project:
 
 Although this project does not require a specific build process, you can define one in the build script if needed.
 
-bash
-Mostrar siempre los detalles
-
-Copiar código
+```bash
 npm run build
-Usage
+```
+
+## Usage
 Run the application:
+
 
 To start the application and interact with it via the terminal, execute:
 
-bash
-Mostrar siempre los detalles
-
-Copiar código
+```bash
 node ./src/orderCoffee.js
+```
+
 Create an account or log in:
 
 Follow the on-screen prompts to either create a new account or log in with existing credentials.
@@ -76,11 +70,7 @@ Complete payment:
 
 After confirming your order, a Stripe payment link will be generated. Use this link to complete the payment.
 
-Project Structure
-python
-Mostrar siempre los detalles
-
-Copiar código
+```
 coffeeshell/
 ├── bin/
 │ └── coffeeshell.js # Entry point for the CLI command
@@ -90,10 +80,16 @@ coffeeshell/
 ├── .gitignore # Git ignore configuration
 ├── .npmignore # npm ignore configuration
 └── package.json # Project metadata and scripts
-Customization
+```
+
+## Customization
+
 Add New Features: Modify orderCoffee.js to implement additional features such as new coffee options or a loyalty program.
 Integrate Other APIs: Extend functionality by integrating other APIs or services (e.g., notifications or delivery tracking).
 Contributing
+
+---
+
 If you want to contribute to this project, please follow these steps:
 
 Fork the repository.
@@ -101,8 +97,10 @@ Create a new branch (git checkout -b feature-branch).
 Make your changes and commit them (git commit -m 'Add new feature').
 Push to the branch (git push origin feature-branch).
 Open a pull request.
-License
+
+
+## License
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-Contact
+## Contact
 For any inquiries, please contact José Campillo. """
