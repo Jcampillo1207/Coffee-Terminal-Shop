@@ -5,14 +5,14 @@
   "main": "orderCoffee.js",
   "type": "module",
   "bin": {
-    "coffeeshell": "./bin/coffeeshell.js"
+    "coffeeshell": "bin/coffeeshell.js"
   },
   "scripts": {
     "start": "node ./bin/coffeeshell.js",
     "prepublishOnly": "npm run build",
     "build": "echo 'Building project...'",
     "version": "echo 'Updating version...'",
-    "postversion": "git push && git push --tags && npm publish"
+    "postversion": "git add . && git commit -m 'Update version' && git push && git push --tags && npm publish"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.0.0",

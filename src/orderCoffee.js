@@ -5,19 +5,15 @@ import qrcode from "qrcode-terminal";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 
-// Cargar las variables de entorno desde el archivo .env
 dotenv.config();
 
-// Configuración de Supabase
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
 const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-// Configuración de Stripe
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
 const stripe = new Stripe(stripeSecretKey);
 
-// Menús y opciones
 const coffeeMenu = [
   { name: "Espresso", price: 2.5 },
   { name: "Latte", price: 3.5 },
@@ -43,7 +39,6 @@ const milkOptions = [
 
 const whippedCreamOptions = ["No whipped cream", "Add whipped cream"];
 
-// Función para crear un nuevo usuario
 async function createAccount() {
   const { email, name, password } = await inquirer.prompt([
     { type: "input", name: "email", message: "Enter your email:" },
@@ -72,7 +67,6 @@ async function createAccount() {
   }
 }
 
-// Función para iniciar sesión
 async function login() {
   const { email, password } = await inquirer.prompt([
     { type: "input", name: "email", message: "Enter your email:" },
@@ -100,7 +94,6 @@ async function login() {
   return data;
 }
 
-// Función para crear un enlace de pago
 async function createPaymentLink(amount) {
   const product = await stripe.products.create({
     name: "Coffee Order",
@@ -124,12 +117,10 @@ async function createPaymentLink(amount) {
   return session.url;
 }
 
-// Función para pedir un café
 async function orderCoffee(user) {
   try {
     console.log("Welcome to the Coffee CLI App!");
 
-    // Paso 1: Seleccionar tipo de café
     const { coffeeChoice } = await inquirer.prompt([
       {
         type: "list",
@@ -143,7 +134,6 @@ async function orderCoffee(user) {
       (coffee) => coffee.name === coffeeChoice
     );
 
-    // Paso 2: Seleccionar tipo de azúcar
     const { sugarChoice } = await inquirer.prompt([
       {
         type: "list",
@@ -153,7 +143,6 @@ async function orderCoffee(user) {
       },
     ]);
 
-    // Paso 3: Seleccionar tipo de leche
     const { milkChoice } = await inquirer.prompt([
       {
         type: "list",
@@ -163,7 +152,6 @@ async function orderCoffee(user) {
       },
     ]);
 
-    // Paso 4: Añadir crema batida
     const { whippedCreamChoice } = await inquirer.prompt([
       {
         type: "list",
@@ -173,7 +161,6 @@ async function orderCoffee(user) {
       },
     ]);
 
-    // Mostrar el resumen del pedido
     console.log("\nHere is your order summary:");
     console.log(`- Coffee: ${selectedCoffee.name}`);
     console.log(`- Sugar: ${sugarChoice}`);
@@ -181,7 +168,6 @@ async function orderCoffee(user) {
     console.log(`- Whipped Cream: ${whippedCreamChoice}`);
     console.log(`- Total Price: $${selectedCoffee.price.toFixed(2)}\n`);
 
-    // Confirmar el pedido
     const { confirmOrder } = await inquirer.prompt([
       {
         type: "confirm",
@@ -196,7 +182,6 @@ async function orderCoffee(user) {
       return;
     }
 
-    // Crear un enlace de pago
     const paymentLink = await createPaymentLink(selectedCoffee.price);
     console.log(
       "Please complete the payment by scanning the QR code or clicking the link:"
@@ -228,7 +213,6 @@ async function orderCoffee(user) {
   }
 }
 
-// Función principal
 async function main() {
   console.log("Welcome to the Coffee CLI App!");
   console.log("Please create an account or log in to continue.\n");
